@@ -1,71 +1,62 @@
 /* eslint-disable indent */
 "use strict";
 
-let numberOfFilms;
+// function getCoupeNumber(number) {
+//   if (typeof number !== "number" || number < 0 || !Number.isInteger(number)) {
+//     return "Ошибка. Проверьте правильность введенного номера места";
+//   } else if (number === 0 || number > 36) {
+//     return "Таких мест в вагоне не существует";
+//   }
 
-function start() {
-  while (numberOfFilms == "" || numberOfFilms == null || isNaN(numberOfFilms)) {
-    numberOfFilms = +prompt("Солько фильмов вы уже посмотрели?", "");
+//   if (number == 1 || number <= 4) {
+//     return 1;
+//   } else if (number == 5 || number <= 7) {
+//     return 2;
+//   } else if (number == 9 || number <= 12) {
+//     return 3;
+//   } else if (number == 13 || number <= 16) {
+//     return 4;
+//   } else if (number == 17 || number <= 20) {
+//     return 5;
+//   } else if (number == 21 || number <= 24) {
+//     return 6;
+//   } else if (number == 25 || number <= 28) {
+//     return 7;
+//   } else if (number == 29 || number <= 32) {
+//     return 8;
+//   } else if (number == 33 || number <= 36) {
+//     return 9;
+//   }
+// }
+
+// console.log(getCoupeNumber(1));
+
+function getTimeFromMinutes(min) {
+  if (
+    min < 0 ||
+    isNaN(min) ||
+    typeof min === "string" ||
+    !Number.isInteger(min)
+  ) {
+    return "Ошибка, проверьте данные";
   }
-}
 
-start();
+  if (min <= 600) {
+    let hours = Math.floor(min / 60);
+    let minut = min % 60;
 
-const personalMovieDB = {
-  count: numberOfFilms,
-  movies: {},
-  actors: {},
-  genres: [],
-  privat: false,
-};
+    let hoursName = "";
 
-function rememberMyFilms() {
-  for (let i = 0; i < 4; i++) {
-    const a = prompt("Один из последних просмотренных фильмов?", ""),
-      b = +prompt("На сколько оцените его?", "");
-
-    if (a !== null && b != null && a !== "" && b != "" && a.length < 50) {
-      personalMovieDB.movies[a] = b;
-      console.log("done");
-    } else {
-      console.log("error");
-      i--;
+    if (hours === 1) {
+      hoursName = "час";
+    } else if (hours >= 2 && hours <= 4) {
+      hoursName = "часа";
+    } else if (hours === 0 || (hours >= 5 && hours <= 10)) {
+      hoursName = "часов";
     }
+
+    return `Это ${hours} ${hoursName} и ${minut} минут`;
   }
 }
 
-rememberMyFilms();
-
-console.log(personalMovieDB);
-
-function detectPersonalLevel() {
-  if (personalMovieDB.count <= 10) {
-    console.log("Просмотрено довольно мало фильмов");
-  } else if (personalMovieDB.count >= 10 && personalMovieDB.count <= 30) {
-    console.log("Вы классический зритель");
-  } else if (personalMovieDB.count >= 30) {
-    console.log("Вы киноман");
-  } else {
-    console.log("Произошла ошибка");
-  }
-}
-
-detectPersonalLevel();
-
-function showMyBD(hidden) {
-  if (!hidden) {
-    console.log(personalMovieDB);
-  }
-}
-
-showMyBD(personalMovieDB.privat);
-
-function writeYourGenres() {
-  for (let i = 1; i <= 3; i++) {
-    personalMovieDB.genres[i - 1] = prompt(
-      `Ваш любимый жанр под номером ${i}`,
-      ""
-    );
-  }
-}
-writeYourGenres();
+console.log(getTimeFromMinutes(50));
